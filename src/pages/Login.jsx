@@ -5,9 +5,11 @@ import { server } from "../components/lib/server";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { isUser, notUser } from "../featured/counter/counterSlice";
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
   const { control, handleSubmit } = useForm();
+  const navigate=useNavigate()
 
   const dispatch=useDispatch()
 
@@ -137,8 +139,8 @@ const Login = () => {
                 Submit
               </Button>
               <Typography variant="body1">
-                Already have an account? 
-                <Button variant="text" type="submit">
+                Do not have an account? 
+                <Button variant="text" type="submit" onClick={()=>navigate('/login')}>
                   Signup
                 </Button>
               </Typography>
