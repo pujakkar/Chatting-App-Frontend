@@ -21,7 +21,7 @@ const Login = () => {
       console.log(user)
       dispatch(isUser(user))
     })
-    .catch(()=>{dispatch(notUser()) 
+    .catch((err)=>{dispatch(notUser()) 
     })
   }
   

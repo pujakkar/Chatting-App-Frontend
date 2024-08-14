@@ -33,7 +33,7 @@ function App() {
     return()=>{
       dispatch(isUser(null))
     }
-  },[userData.data])
+  },[dispatch, userData.data])
 
  
 
