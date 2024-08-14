@@ -140,7 +140,7 @@ const Login = () => {
               </Button>
               <Typography variant="body1">
                 Do not have an account? 
-                <Button variant="text" type="submit" onClick={()=>navigate('/login')}>
+                <Button variant="text" type="submit" onClick={()=>navigate('/signup')}>
                   Signup
                 </Button>
               </Typography>
