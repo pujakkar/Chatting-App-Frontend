@@ -18,9 +18,10 @@ const Login = () => {
     .get(`${server}/user/userProfile`,{withCredentials:true})
     .then((res)=>{
       const {user}=res.data
+      console.log(user)
       dispatch(isUser(user))
     })
-    .catch((err)=>{dispatch(notUser()) 
+    .catch(()=>{dispatch(notUser()) 
     })
   }
   
