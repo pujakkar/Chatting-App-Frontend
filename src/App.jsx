@@ -48,7 +48,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Suspense fallback={<LayoutLoader/>}>
+    <Suspense fallback={<div>Loading...</div>}>
     <Routes>
       <Route element={<SocketProvider>
         <ProtectRoute user={userD}/>
