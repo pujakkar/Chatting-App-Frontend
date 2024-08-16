@@ -25,6 +25,7 @@ const NotificationItem=memo(({_id,sender,handler,handleClose})=>{
     const {fullName,avatar}=sender
 
     const [acceptReq]=useAcceptReqMutation()
+    
 
     handler=({_id,accept})=>{
         console.log(accept)

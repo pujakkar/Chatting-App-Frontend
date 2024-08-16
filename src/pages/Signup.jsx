@@ -38,7 +38,7 @@ const Signup = () => {
           "Content-Type":"multipart/form-data"
         }
       })
-      console.log(data.message)
+      console.log('signup',data.message)
       toast.success(data.message)
       setRedirect(true)
     } catch (error) {
