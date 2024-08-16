@@ -2,32 +2,25 @@ import { Stack, Typography, IconButton, Paper, InputBase, } from "@mui/material"
 import {ArrowBack as BackIcon,Search as SearchIcon} from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { toggle } from '../../featured/counter/counterSlice';
-import SearchUser from "./SearchUser";
 import {useInputValidation} from '6pp'
-import { useLazySearchUserQuery } from "../../service/api";
+import { useLazySearchFriendsQuery} from "../../service/api";
 import { useEffect, useState } from "react";
+import ChatItem from "./ChatItem";
 
-
-
-const NewChat = () => {
+const SearchMyFriends = () => {
     const dispatch=useDispatch()
     const search=useInputValidation('')
 
     const [user,setUser]=useState([])
 
-    const [searchUser]=useLazySearchUserQuery()
+    const [searchUser]=useLazySearchFriendsQuery()
 
     useEffect(()=>
     {
       const timeoutId=setTimeout(() => {
         searchUser(search.value)
-        .then(({data})=>{
-          if(search.value===""){
-            setUser([])
-          }
-          else{
-            setUser(data.users)
-          } 
+        .then((data)=>{
+            setUser(data.data.userChats)
         })
         .catch((err)=>console.log(err,"hii"))
       }, 1000);
@@ -75,14 +68,14 @@ const NewChat = () => {
                   />
                 </Paper>
         </Stack>
-        {user.length>0? <Stack sx={{
+        <Stack sx={{
           height:'80%',
         }}>
-            <SearchUser sampleUsers={user}/>
-        </Stack> : <div></div>}
-
+            {user.map((singleChat,index)=>
+            <ChatItem key={index} _id={singleChat._id} name={singleChat.name} avatar={singleChat.avatar} groupChat={singleChat.groupChat}/>)}
+        </Stack>
     </Stack>
   )
 }
 
-export default NewChat
+export default SearchMyFriends

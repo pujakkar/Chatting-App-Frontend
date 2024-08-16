@@ -10,10 +10,10 @@ const SearchUser = ({sampleUsers}) => {
       overflowX:'hidden',
     }}>
         {sampleUsers.map((user,index)=>{
-            const {fullName,_id,avatar}=user
+            const {userName,_id,avatar}=user
               return(
                 <>
-                    <AddUserItem key={index} name={fullName} _id={_id} avatar={avatar}/>
+                    <AddUserItem key={index} name={userName} _id={_id} avatar={avatar}/>
                     <Divider variant="middle"/>
                 </>
 

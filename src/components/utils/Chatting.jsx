@@ -34,7 +34,7 @@ const Chatting = ({chatId}) => {
             setIsGroup(false)
         }
     },[chatId])
-    console.log(isGroup)
+
 
     useEffect(()=>{
         if(isChat.groupChat===true){

@@ -17,8 +17,7 @@ const Home = () => {
 
     useEffect(()=>{
         if(data){
-            console.log(data.transformChats.length)
-            console.log('creator fetching')
+
             data.transformChats.map(({_id,creator})=>dispatch(isGroupCreator({_id,creator})))
         }
     },[data])

@@ -5,7 +5,8 @@ import { notificationReset, toggle } from '../../featured/counter/counterSlice';
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { useGetNotificationQuery } from '../../service/api';
 import { getSocket } from '../utils/Socket';
-import { NEW_REQUEST_ACCEPTED } from '../lib/event';
+import { NEW_REQUEST, NEW_REQUEST_ACCEPTED } from '../lib/event';
+import { getOrSaveItem } from '../lib/fileformat';
 const  Notification =lazy(()=> import('../utils/Notification'))
 const Logout=lazy(()=>import('../utils/Logout'))
 
@@ -52,6 +53,7 @@ const Header = () => {
 
    if(isNotification){
       dispatch(notificationReset())
+      getOrSaveItem({key:NEW_REQUEST,value:notificationCount})
    }
   return (
    <>

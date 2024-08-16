@@ -19,13 +19,6 @@ const SocketProvider = ({ children }) => {
   useEffect(() => {
     const socket = socketRef.current;
 
-    socket.on('connect', () => {
-      console.log('Connected with socket ID:', socket.id);
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Disconnected from server');
-    });
 
     return () => {
       socket.disconnect();

@@ -12,13 +12,14 @@ const Login = () => {
   const navigate=useNavigate()
 
   const dispatch=useDispatch()
+  console.log(server)
 
   async function fetchData(){
     axios
     .get(`${server}/user/userProfile`,{withCredentials:true})
     .then((res)=>{
       const {user}=res.data
-      console.log(user)
+      console.log(user,'hi')
       dispatch(isUser(user))
     })
     .catch((err)=>{dispatch(notUser()) 
@@ -26,11 +27,10 @@ const Login = () => {
   }
   
 
-  const onSubmit = async ({fullName,email,password}) =>{
+  const onSubmit = async ({email,password}) =>{
     const formData=new FormData()
 
     formData.append('email',email)
-    formData.append('fullName',fullName)
     formData.append('password',password)
     
 
@@ -72,7 +72,7 @@ const Login = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '25rem',
+            height: '22rem',
             width: '19rem',
           }}
         >
@@ -81,23 +81,6 @@ const Login = () => {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack gap='1rem'>
-              <Controller
-                name="fullName"
-                control={control}
-                rules={{
-                  required: 'Full name is required'
-                }}
-                render={({ field, fieldState: { error } }) => 
-                  <TextField
-                    {...field}
-                    required
-                    label='Full Name'
-                    variant="outlined"
-                    error={!!error}
-                    helperText={error ? error.message : null}
-                  />
-                }
-              />
               <Controller
                 name="email"
                 control={control}

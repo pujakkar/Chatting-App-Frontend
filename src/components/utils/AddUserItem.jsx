@@ -14,11 +14,14 @@ const AddUserItem = ({avatar,_id,name,handler}) => {
   handler= async(id)=>{
     try {
       const res=await sendFriendReq({userId:id})
+      console.log('sending')
       if(res.data){
+        console.log('sent')
         toast.success(res.data.message)
         setIsAdded(true)
       }
       else{
+        console.log('not')
         toast.error(res.error.data.message)
         console.log('hello',res.error)
       }

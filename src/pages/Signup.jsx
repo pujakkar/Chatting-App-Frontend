@@ -6,7 +6,7 @@ import { useFileHandler } from '6pp';
 import axios from 'axios'
 import { server } from "../components/lib/server";
 import {toast} from 'react-hot-toast'
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
@@ -15,6 +15,8 @@ const Signup = () => {
   const { control, handleSubmit } = useForm();
   const avatar = useFileHandler('single');
   const [redirect,setRedirect]=useState(false)
+
+  const navigate=useNavigate()
 
 
   const onSubmit = async ({email,password,fullName,username}) => {
@@ -70,7 +72,7 @@ const Signup = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '39rem',
+            height: '40rem',
             width: '19rem',
           }}
         >
@@ -192,6 +194,9 @@ const Signup = () => {
               <Button type="submit" variant="contained" sx={{ width: '5rem' }}>
                 Submit
               </Button>
+              <Typography marginTop='-0.5rem'>Already have an account ? <Button variant="text" type="submit" onClick={()=>navigate('/login')}>
+                  Login
+                </Button></Typography>
             </Stack>
           </form>
         </Paper>

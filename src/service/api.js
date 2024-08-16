@@ -22,6 +22,13 @@ export const api=createApi({
             }),
             providesTags:['User'],
         }),
+        searchFriends:builder.query({
+            query:(name)=>({
+                url:`user/searchMyFriends?name=${name}`,
+                credentials:'include',
+            }),
+            providesTags:['User'],
+        }),
         sendReq:builder.mutation({
             query:(data)=>({
                 url:'user/sendReq',
@@ -163,4 +170,5 @@ export const {
     useDeleteChatMutation,
     useGetUserProfileQuery,
     useLeaveGroupChatMutation,
+    useLazySearchFriendsQuery,
   } = api;

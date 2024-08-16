@@ -1,6 +1,5 @@
 import {Route,Routes,BrowserRouter} from 'react-router-dom'
 import { Suspense,lazy,  useEffect} from 'react'
-import Chat from './pages/Chat'
 import ProtectRoute from './components/lib/ProtectRoute'
 import {Toaster} from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isUser,  } from './featured/counter/counterSlice'
 import { SocketProvider } from './components/utils/Socket'
 import { useGetUserProfileQuery, } from './service/api'
+import LayoutLoader from './components/layout/LayoutLoader'
 
 const Home=lazy(()=>import('./pages/Home'))
 const Login=lazy(()=>import('./pages/Login'))
 const Signup=lazy(()=>import('./pages/Signup'))
+const Chat=lazy(()=> import('./pages/Chat'))
 
 function App() {
 
@@ -25,9 +26,10 @@ function App() {
   //   console.log(userData.data)
   // }
 
+
   useEffect(()=>{
     if(userData.data){
-      console.log(userData.data)
+
       dispatch(isUser(userData.data.user))
     }
     return()=>{
@@ -40,9 +42,13 @@ function App() {
   const userD = useSelector((state) => state.counter.user);
   //console.log('redux user',userD)
 
+  if(userData.isLoading){
+    return (<LayoutLoader/>)
+  }
+
   return (
     <BrowserRouter>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LayoutLoader/>}>
     <Routes>
       <Route element={<SocketProvider>
         <ProtectRoute user={userD}/>

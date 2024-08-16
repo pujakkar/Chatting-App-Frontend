@@ -1,4 +1,4 @@
-import { IconButton, InputBase, Paper } from "@mui/material";
+import {IconButton, InputBase, Paper } from "@mui/material";
 import Header from "./Header";
 import {  Search as SearchIcon } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,24 +11,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import {useInputValidation} from '6pp'
 import NewGroup from "../utils/NewGroup";
 import { useGetChatsQuery } from "../../service/api";
-import { alertMessage, isUserChat, notificationIncreament } from "../../featured/counter/counterSlice";
-import { useCallback, useEffect } from "react";
+import { alertMessage, isUserChat, notificationIncreament, toggle } from "../../featured/counter/counterSlice";
+import { useCallback, useEffect} from "react";
 import {NEW_MESSAGE_ALERT, NEW_REQUEST, REFETCH_CHATS} from '../lib/event'
 import { getSocket } from "../utils/Socket";
 import { getOrSaveItem } from "../lib/fileformat";
+import SearchMyFriends from "../utils/SearchMyFriends";
+
+import ChatListLoader from "./ChatListLoader";
 
 
 const LeftBar = () => {
   const isOpen = useSelector((state) => state.counter.value);
   const userD=useSelector((state)=>state.counter.user)
   const newMessagesAlert=useSelector((state) => state.counter.newMessagesAlert);
+  const notificationCount=useSelector((state)=>state.counter.notificationCount)
 
   //console.log(newMessagesAlert)
+
 
   const dispatch=useDispatch()
   const params=useParams()
 
   const chatId=params.chatId
+
 
   const navigate=useNavigate()
 
@@ -46,6 +52,7 @@ const LeftBar = () => {
   useEffect(()=>{
     if(data){
       // console.log(data.transformChats)
+
         dispatch(isUserChat(data.transformChats))
     }
     return()=>{
@@ -85,6 +92,9 @@ const LeftBar = () => {
 
 
 
+  useEffect(()=>{
+    getOrSaveItem({key:NEW_REQUEST,value:notificationCount})
+  },[notificationCount])
 
   useEffect(()=>{
     getOrSaveItem({key:NEW_MESSAGE_ALERT,value:newMessagesAlert})
@@ -114,7 +124,7 @@ const LeftBar = () => {
   
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <ChatListLoader/>;
   }
 
   if (error) {
@@ -152,10 +162,11 @@ const LeftBar = () => {
               </IconButton>
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Search"
+                placeholder="Search friends"
                 inputProps={{ 'aria-label': 'search' }}
                 value={search.value}
                 onChange={search.changeHandler}
+                onClick={()=>dispatch(toggle('searchFriends'))}
               />
             </Paper>
           </div>
@@ -199,6 +210,14 @@ const LeftBar = () => {
           height:'100%'
         }}>
           <NewGroup sampleChats={sampleChats} />
+        </div>
+      )
+    case 'searchFriends':
+      return(
+        <div style={{
+          height:'100%'
+        }}>
+          <SearchMyFriends/>
         </div>
       )
   }

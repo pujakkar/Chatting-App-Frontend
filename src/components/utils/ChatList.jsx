@@ -5,7 +5,11 @@ import ChatItem from "./ChatItem"
 const ChatList = ({sampleChats ,chatId,newMessagesAlert}) => {
 
   if(sampleChats.length===0){
-    return <Typography>No chats available</Typography>
+    return <Stack 
+    marginTop='2rem'
+    alignItems='center'
+    ><Typography variant="h6">No chats availaible</Typography>
+    </Stack>
   }
 
   return (
