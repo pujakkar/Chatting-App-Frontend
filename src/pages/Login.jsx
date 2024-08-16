@@ -35,7 +35,7 @@ const Login = () => {
     
 
     try {
-      const {data}=await axios.post(`${server}/user/login`,
+      const res=await axios.post(`${server}/user/login`,
         formData,
         {
         withCredentials:true,
@@ -43,8 +43,14 @@ const Login = () => {
           "Content-Type":"multipart/form-data"
         }
       })
-      toast.success(data.message)
-      fetchData()
+      console.log(res)
+      if(res.status>300){
+        toast.error(res.data.message)
+      }
+      else{
+        toast.success(res.data.message)
+        fetchData()
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "something went wrong")
     }

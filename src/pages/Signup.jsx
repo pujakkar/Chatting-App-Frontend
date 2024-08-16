@@ -30,7 +30,7 @@ const Signup = () => {
     formData.append('avatar',avatar.file)
 
     try {
-      const {data}=await axios.post(`${server}/user/signup`,
+      const {data,status}=await axios.post(`${server}/user/signup`,
         formData,
         {
         withCredentials:true,
@@ -38,9 +38,13 @@ const Signup = () => {
           "Content-Type":"multipart/form-data"
         }
       })
-      console.log('signup',data.message)
-      toast.success(data.message)
-      setRedirect(true)
+      if(status>300){
+        toast.error(data.message)
+      }
+      else{
+        toast.success(data.message)
+        setRedirect(true)
+      }
     } catch (error) {
       console.log(error)
       toast.error(error.response?.data?.message || "something went wrong")
